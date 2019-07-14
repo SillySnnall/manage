@@ -33,7 +33,7 @@ data class Customer(
 //`code` varchar(32) NOT NULL COMMENT '客户编码',
 //`shop` varchar(255) NOT NULL COMMENT '商店名称',
 //`name` varchar(11) NOT NULL COMMENT '客户名称',
-//`phone` int(11) NOT NULL COMMENT '电话号码',
+//`phone` varchar(11) NOT NULL COMMENT '电话号码',
 //`create_time` int(10) NOT NULL COMMENT '创建时间',
 //PRIMARY KEY (`id`)
-//) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+//) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

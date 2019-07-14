@@ -9,8 +9,7 @@ import silly.manage.entity.Customer
  * 客户dao
  */
 interface CustomerDao : JpaRepository<Customer, Long> {
-//    fun findByBarCode(barCode: String): Customer?
-//    fun findByCode(code: String): Customer?
+    fun findByCode(code: String): Customer?
 //    fun findByUserIdAndTitle(userId: String, title: String): Commodity?
 //    fun findByType(type: Int, pageable: Pageable): List<Commodity>
 }

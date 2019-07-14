@@ -54,9 +54,10 @@ class CommodityService(
         val findByBarCode = commodityDao.findByBarCode(commodity.barCode)
         if (findByBarCode != null) return Data("条码重复", -1)
 
+        // 确认商品编码唯一
         var cUUID = cUUID()
         while (true) {
-            if (commodityDao.findByBarCode(cUUID) == null) break
+            if (commodityDao.findByCode(cUUID) == null) break
             cUUID = cUUID()
         }
 
