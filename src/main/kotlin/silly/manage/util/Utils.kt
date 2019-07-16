@@ -10,8 +10,16 @@ import java.io.IOException
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.FileInputStream
+import java.text.SimpleDateFormat
 
 
+
+/**
+ * 生成时间+时间戳
+ */
+fun cTimec(): String{
+   return "${SimpleDateFormat("yyyyMMdd").format(Date())}${cdateTime()}"
+}
 /**
  * 生成创建时间
  */

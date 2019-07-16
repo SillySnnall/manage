@@ -54,14 +54,7 @@ class CommodityService(
         val findByBarCode = commodityDao.findByBarCode(commodity.barCode)
         if (findByBarCode != null) return Data("条码重复", -1)
 
-        // 确认商品编码唯一
-        var cUUID = cUUID()
-        while (true) {
-            if (commodityDao.findByCode(cUUID) == null) break
-            cUUID = cUUID()
-        }
-
-        val commodityN = Commodity(cUUID, commodity.name, commodity.weight, commodity.specifications, commodity.home,
+        val commodityN = Commodity(cUUID() + cdateTime(), commodity.name, commodity.weight, commodity.specifications, commodity.home,
                 commodity.barCode, commodity.expire, commodity.priceIn, commodity.priceOut, commodity.imgUrl, cdateTime())
 
         copyImg(commodityN)
@@ -109,7 +102,6 @@ class CommodityService(
      * 删除商品
      */
     fun deleteCommodity(commodity: Commodity): Data {
-        if (commodity.code.isEmpty()) return Data("商品编码为空", -1)
 
         val findByCode = commodityDao.findByCode(commodity.code) ?: return Data("商品不存在", -1)
 

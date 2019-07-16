@@ -10,6 +10,4 @@ import silly.manage.entity.Customer
  */
 interface CustomerDao : JpaRepository<Customer, Long> {
     fun findByCode(code: String): Customer?
-//    fun findByUserIdAndTitle(userId: String, title: String): Commodity?
-//    fun findByType(type: Int, pageable: Pageable): List<Commodity>
 }

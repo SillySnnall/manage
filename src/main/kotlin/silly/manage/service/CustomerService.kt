@@ -1,14 +1,8 @@
 package silly.manage.service
 
-import org.jsoup.Jsoup
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import org.springframework.util.LinkedMultiValueMap
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Sort
-import silly.manage.dao.CommodityDao
 import silly.manage.dao.CustomerDao
-import silly.manage.entity.Commodity
 import silly.manage.entity.Customer
 import silly.manage.entity.Data
 import silly.manage.entity.Page
@@ -29,13 +23,7 @@ class CustomerService(
     fun addCustomer(customer: Customer): Data {
         if (customer.shop.isEmpty()) return Data("商店名字为空", -1)
 
-        var cUUID = cUUID()
-        while (true) {
-            if (customerDao.findByCode(cUUID) == null) break
-            cUUID = cUUID()
-        }
-
-        val customerN = Customer(cUUID, customer.shop, customer.name, customer.phone, cdateTime())
+        val customerN = Customer(cUUID()+cdateTime(), customer.shop, customer.name, customer.phone, cdateTime())
 
         customerDao.save(customerN)
         return Data(customerN)
@@ -62,7 +50,6 @@ class CustomerService(
      * 删除客户
      */
     fun deleteCustomer(customer: Customer): Data {
-        if (customer.code.isEmpty()) return Data("客户编码为空", -1)
 
         val findByCode = customerDao.findByCode(customer.code) ?: return Data("客户不存在", -1)
 
