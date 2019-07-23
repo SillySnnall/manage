@@ -1,13 +1,12 @@
 package silly.manage.service
 
-import org.jsoup.Jsoup
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import org.springframework.util.LinkedMultiValueMap
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import silly.manage.dao.CommodityDao
 import silly.manage.entity.Commodity
+import silly.manage.entity.Customer
 import silly.manage.entity.Data
 import silly.manage.entity.Page
 import silly.manage.util.cUUID
@@ -29,11 +28,12 @@ class CommodityService(
     private lateinit var commodityImage: String
 
     fun isEmptys(commodity: Commodity): Data {
-        if (commodity.name.isEmpty()) return Data("商品名字为空", -1)
-        if (commodity.barCode.isEmpty()) return Data("条形码为空", -1)
-        if (commodity.priceIn == 0.0) return Data("进价为空", -1)
-        if (commodity.priceOut == 0.0) return Data("售价为空", -1)
-        return Data()
+        if (commodity.name.isEmpty()) return Data(error = "商品名字为空")
+        if (commodity.barCode.isEmpty()) return Data(error = "条形码为空")
+        if (commodity.priceIn == 0.0) return Data(error = "进价为空")
+        if (commodity.priceOut == 0.0) return Data(error = "正发价为空")
+        if (commodity.priceOutDown == 0.0) return Data(error = "批发价为空")
+        return Data(code = 0)
     }
 
     fun copyImg(commodity: Commodity) {
@@ -52,15 +52,15 @@ class CommodityService(
         if (emptys.code == -1) return emptys
 
         val findByBarCode = commodityDao.findByBarCode(commodity.barCode)
-        if (findByBarCode != null) return Data("条码重复", -1)
+        if (findByBarCode != null) return Data(error = "条码重复")
 
         val commodityN = Commodity(cUUID() + cdateTime(), commodity.name, commodity.weight, commodity.specifications, commodity.home,
-                commodity.barCode, commodity.expire, commodity.priceIn, commodity.priceOut, commodity.imgUrl, cdateTime())
+                commodity.barCode, commodity.expire, commodity.priceIn, commodity.priceOut, commodity.priceOutDown, commodity.imgUrl, cdateTime())
 
         copyImg(commodityN)
 
         commodityDao.save(commodityN)
-        return Data(commodityN)
+        return Data(commodityN, 0)
     }
 
     /**
@@ -70,12 +70,12 @@ class CommodityService(
         val emptys = isEmptys(commodity)
         if (emptys.code == -1) return emptys
 
-        val findByCode = commodityDao.findByCode(commodity.code) ?: return Data("商品不存在", -1)
+        val findByCode = commodityDao.findByCode(commodity.code) ?: return Data(error = "商品不存在")
 
         // 判断是否修改条码
         if (commodity.barCode != findByCode.barCode) {
             val findByBarCode = commodityDao.findByBarCode(commodity.barCode)
-            if (findByBarCode != null) return Data("条码重复", -1)
+            if (findByBarCode != null) return Data(error = "条码重复")
         }
 
         // 复制临时图片到正式文件夹
@@ -94,7 +94,7 @@ class CommodityService(
         findByCode.imgUrl = commodity.imgUrl
 
         commodityDao.save(findByCode)
-        return Data(commodity)
+        return Data(commodity, 0)
     }
 
 
@@ -103,22 +103,25 @@ class CommodityService(
      */
     fun deleteCommodity(commodity: Commodity): Data {
 
-        val findByCode = commodityDao.findByCode(commodity.code) ?: return Data("商品不存在", -1)
+        val findByCode = commodityDao.findByCode(commodity.code) ?: return Data(error = "商品不存在")
 
         commodityDao.delete(findByCode)
-        return Data("删除成功")
+        return Data("删除成功", 0)
     }
 
     /**
      * 查找商品
      */
     fun findCommodity(fromPage: Page, commodity: Commodity): Data {
-
-        val pageable = PageRequest.of(fromPage.page, fromPage.size)
-
-        val findAll = commodityDao.findAll(pageable).content
-
-        return Data(findAll)
+        val customerList: List<Commodity>
+        if (commodity.name.isEmpty()) {
+            val sort = Sort(Sort.Direction.DESC, "createTime")
+            val pageable = PageRequest.of(fromPage.page, fromPage.size, sort)
+            customerList = commodityDao.findAll(pageable).content
+        } else {
+            customerList = commodityDao.findByNameLike("%${commodity.name}%")!!
+        }
+        return Data(customerList, 0)
     }
 
 }

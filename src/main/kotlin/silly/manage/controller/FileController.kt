@@ -2,10 +2,7 @@ package silly.manage.controller
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import silly.manage.entity.Commodity
 import silly.manage.entity.Data
-import silly.manage.entity.Page
-import silly.manage.service.CommodityService
 import silly.manage.service.UpdateService
 
 /**
@@ -24,7 +21,7 @@ class FileController(
         return try {
             updateService.uploadImg(file)
         } catch (e: Exception) {
-            Data("上传图片失败", -1)
+            Data(error = "上传图片失败")
         }
     }
 }

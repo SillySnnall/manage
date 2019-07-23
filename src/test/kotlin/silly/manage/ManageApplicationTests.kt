@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 import silly.manage.dao.CommodityDao
+import silly.manage.dao.CustomerDao
 import silly.manage.dao.OrdersDao
 import silly.manage.entity.OrderItem
 import silly.manage.entity.Orders
@@ -22,6 +23,8 @@ class ManageApplicationTests {
     private lateinit var ordersDao: OrdersDao
     @Autowired
     private lateinit var orderService: OrderService
+    @Autowired
+    private lateinit var customerDao: CustomerDao
 
     @Test
     fun contextLoads() {
@@ -36,11 +39,15 @@ class ManageApplicationTests {
 //                OrderItem(commodityCode="adsarr",num = 16,price = 32.53,createTime = cdateTime()),
 //                OrderItem(commodityCode="ad332dxcc12",num = 1,price = 222.3,createTime = cdateTime())
 //        )))
-        orderService.updateOrder(Orders(customerCode = "31212", num = 14, price = 523.56, orderItemList = arrayListOf(
-                OrderItem(commodityCode="adsa321555",num = 4,price = 2.3,createTime = cdateTime()),
-                OrderItem(commodityCode="adsarr",num = 16,price = 32.53,createTime = cdateTime()),
-                OrderItem(commodityCode="ad332dxcc12",num = 1,price = 222.3,createTime = cdateTime())
-        )))
+//        orderService.updateOrder(Orders(customerCode = "31212", num = 14, price = 523.56, orderItemList = arrayListOf(
+//                OrderItem(commodityCode="adsa321555",num = 4,price = 2.3,createTime = cdateTime()),
+//                OrderItem(commodityCode="adsarr",num = 16,price = 32.53,createTime = cdateTime()),
+//                OrderItem(commodityCode="ad332dxcc12",num = 1,price = 222.3,createTime = cdateTime())
+//        )))
+
+
+//        val findByShop = customerDao.findByShopLike("%好好%")
+//        println("绝对是拉接受了-------$findByShop")
 
     }
 }

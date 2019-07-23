@@ -22,7 +22,7 @@ class CommodityController(
         return try {
             commodityService.addCommodity(formCommodity)
         } catch (e: Exception) {
-            Data("添加失败", -1)
+            Data(error = "添加失败")
         }
     }
 
@@ -34,7 +34,7 @@ class CommodityController(
         return try {
             commodityService.updateCommodity(formCommodity)
         } catch (e: Exception) {
-            Data("修改失败", -1)
+            Data(error = "修改失败")
         }
     }
 
@@ -46,7 +46,7 @@ class CommodityController(
         return try {
             commodityService.deleteCommodity(formCommodity)
         } catch (e: Exception) {
-            Data("删除失败", -1)
+            Data(error = "删除失败")
         }
     }
 
@@ -56,9 +56,9 @@ class CommodityController(
     @RequestMapping("/find_commodity")
     fun findCommodity(fromPage: Page, formCommodity: Commodity): Data {
         return try {
-            commodityService.findCommodity(fromPage,formCommodity)
+            commodityService.findCommodity(fromPage, formCommodity)
         } catch (e: Exception) {
-            Data("查找失败", -1)
+            Data(error = "查找失败")
         }
     }
 }

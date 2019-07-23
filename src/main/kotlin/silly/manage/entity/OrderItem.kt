@@ -17,12 +17,15 @@ data class OrderItem(
         var commodityCode: String = "",// 商品编码
         var num: Long = 0,// 数量
         var price: Double = 0.0,// 单价
+
         var createTime: Long = 0,// 创建时间
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @JsonIgnore // 过滤json返回字段
-        var id: Long? = null// 自增id
+        var id: Long? = null,// 自增id
         // 非数据库字段
+        @javax.persistence.Transient
+        var name: String = ""// 商品名字
 ) {
     override fun toString(): String {
         return Gson().toJson(this)

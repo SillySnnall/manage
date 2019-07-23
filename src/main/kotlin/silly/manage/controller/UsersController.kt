@@ -3,22 +3,23 @@ package silly.manage.controller
 import org.springframework.web.bind.annotation.*
 import silly.manage.entity.*
 import silly.manage.service.OrderService
+import silly.manage.service.UsersService
 
 /**
- * 订单控制器
+ * 用户控制器
  */
 @RestController
-class OrderController(
-        private val orderService: OrderService
+class UsersController(
+        private val usersrService: UsersService
 ) {
 
     /**
      * 添加订单
      */
-    @RequestMapping("/add_order")
-    fun addOrder(formOrder: Orders): Data {
+    @RequestMapping("/add_users")
+    fun addUsers(formUsers: Users): Data {
         return try {
-            orderService.addOrder(formOrder)
+            usersrService.addUsers(formUsers)
         } catch (e: Exception) {
             Data(error = "添加失败")
         }
@@ -27,10 +28,10 @@ class OrderController(
     /**
      * 修改订单
      */
-    @RequestMapping("/update_order")
-    fun updateOrder(formOrder: Orders): Data {
+    @RequestMapping("/update_users")
+    fun updateUsers(formUsers: Users): Data {
         return try {
-            orderService.updateOrder(formOrder)
+            usersrService.updateUsers(formUsers)
         } catch (e: Exception) {
             Data(error = "修改失败")
         }
@@ -39,10 +40,10 @@ class OrderController(
     /**
      * 删除订单
      */
-    @RequestMapping("/delete_order")
-    fun deleteOrder(formOrder: Orders): Data {
+    @RequestMapping("/delete_users")
+    fun deleteUsers(formUsers: Users): Data {
         return try {
-            orderService.deleteOrder(formOrder)
+            usersrService.deleteUsers(formUsers)
         } catch (e: Exception) {
             Data(error = "删除失败")
         }
@@ -51,22 +52,22 @@ class OrderController(
     /**
      * 查找订单
      */
-    @RequestMapping("/find_order")
-    fun findOrder(fromPage: Page, formOrder: Orders): Data {
+    @RequestMapping("/find_users")
+    fun findUsers(fromPage: Page, formUsers: Users): Data {
         return try {
-            orderService.findOrder(fromPage, formOrder)
+            usersrService.findUsers(fromPage, formUsers)
         } catch (e: Exception) {
             Data(error = "查找失败")
         }
     }
 
     /**
-     * 查找订单详情
+     * 查找订单
      */
-    @RequestMapping("/find_order_item")
-    fun findOrderItem(formOrder: Orders): Data {
+    @RequestMapping("/login")
+    fun login(formUsers: Users): Data {
         return try {
-            orderService.findOrderItem(formOrder)
+            usersrService.login(formUsers)
         } catch (e: Exception) {
             Data(error = "查找失败")
         }

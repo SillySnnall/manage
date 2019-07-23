@@ -1,7 +1,6 @@
 package silly.manage.controller
 
 import org.springframework.web.bind.annotation.*
-import silly.manage.entity.Commodity
 import silly.manage.entity.Customer
 import silly.manage.entity.Data
 import silly.manage.entity.Page
@@ -23,7 +22,7 @@ class CustomerController(
         return try {
             customerService.addCustomer(formCustomer)
         } catch (e: Exception) {
-            Data("添加失败", -1)
+            Data(error = "添加失败")
         }
     }
 
@@ -35,7 +34,7 @@ class CustomerController(
         return try {
             customerService.updateCustomer(formCustomer)
         } catch (e: Exception) {
-            Data("修改失败", -1)
+            Data(error = "修改失败")
         }
     }
 
@@ -47,7 +46,7 @@ class CustomerController(
         return try {
             customerService.deleteCustomer(formCustomer)
         } catch (e: Exception) {
-            Data("删除失败", -1)
+            Data(error = "删除失败")
         }
     }
 
@@ -59,7 +58,7 @@ class CustomerController(
         return try {
             customerService.findCustomer(fromPage, formCustomer)
         } catch (e: Exception) {
-            Data("查找失败", -1)
+            Data(error = "查找失败")
         }
     }
 }

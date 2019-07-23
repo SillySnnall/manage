@@ -18,6 +18,7 @@ data class Orders(
         var num: Long = 0,// 订单总数
         var price: Double = 0.0,// 订单总金额
         var priceUp: String = "",// 订单总金额大写
+        var state: Int = 0,// 订单状态（0未过账，1过账）
         var createTime: Long = 0,// 创建时间
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +26,9 @@ data class Orders(
         var id: Long? = null,// 自增id
         // 非数据库字段
         @javax.persistence.Transient
-        var orderItemList:MutableList<OrderItem> = arrayListOf()
+        var shop: String = "",// 商店名称
+        @javax.persistence.Transient
+        var orderItemListJson: String = ""// 订单列表json
 ) {
     override fun toString(): String {
         return Gson().toJson(this)
@@ -40,6 +43,7 @@ data class Orders(
 //`num` int(11) NOT NULL COMMENT '订单总数',
 //`price` decimal(10,2) NOT NULL COMMENT '订单总金额',
 //`price_up` varchar(25) NOT NULL COMMENT '订单总金额大写',
+//`state` int(1) NOT NULL COMMENT '订单状态（0未过账，1过账）',
 //`create_time` int(10) NOT NULL COMMENT '创建时间',
 //PRIMARY KEY (`id`)
 //) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;

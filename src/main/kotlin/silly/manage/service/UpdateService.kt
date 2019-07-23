@@ -19,7 +19,7 @@ class UpdateService {
      */
     fun uploadImg(file: MultipartFile): Data {
         val upload = upload(file, temp)
-        if (upload.isEmpty()) return Data("上传失败", -1)
-        return Data("$mainUrl/temp/$upload")
+        if (upload.isEmpty()) return Data(error = "上传失败")
+        return Data("$mainUrl/temp/$upload",0)
     }
 }

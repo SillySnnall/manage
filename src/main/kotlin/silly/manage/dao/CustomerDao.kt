@@ -10,4 +10,5 @@ import silly.manage.entity.Customer
  */
 interface CustomerDao : JpaRepository<Customer, Long> {
     fun findByCode(code: String): Customer?
+    fun findByShopLike(shop: String): List<Customer>?
 }

@@ -20,7 +20,8 @@ data class Commodity(
         var barCode: String = "",// 条形码
         var expire: String = "",// 保质期
         var priceIn: Double = 0.0,// 进货价格
-        var priceOut: Double = 0.0,// 出货价格
+        var priceOut: Double = 0.0,// 正发价格
+        var priceOutDown: Double = 0.0,// 批发价格
         var imgUrl: String = "",// 商品图片
         var createTime: Long = 0,// 创建时间
         @Id
@@ -36,7 +37,7 @@ data class Commodity(
 
 //CREATE TABLE `commodity` (
 //`id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
-//`code` varchar(32) NOT NULL COMMENT '商品编码',
+//`code` varchar(42) NOT NULL COMMENT '商品编码',
 //`name` varchar(255) NOT NULL COMMENT '商品名称',
 //`weight` varchar(11) NOT NULL COMMENT '商品重量',
 //`specifications` varchar(11) NOT NULL COMMENT '商品规格',
@@ -44,8 +45,9 @@ data class Commodity(
 //`bar_code` varchar(15) NOT NULL COMMENT '条形码',
 //`expire` varchar(5) NOT NULL COMMENT '保质期',
 //`price_in` decimal(10,2) NOT NULL COMMENT '进货价格',
-//`price_out` decimal(10,2) NOT NULL COMMENT '出货价格',
+//`price_out` decimal(10,2) NOT NULL COMMENT '正发价格',
+//`price_out_down` decimal(10,2) NOT NULL COMMENT '批发价格',
 //`img_url` varchar(255) NOT NULL COMMENT '商品图片',
 //`create_time` int(10) NOT NULL COMMENT '创建时间',
 //PRIMARY KEY (`id`)
-//) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+//) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
